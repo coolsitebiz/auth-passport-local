@@ -1,0 +1,32 @@
+{
+  "name": "auth-passport-local",
+  "version": "1.0.0",
+  "description": "passport local boilerplate",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coolsitebiz/auth-passport-local.git"
+  },
+  "keywords": [
+    "passport",
+    "node",
+    "auth"
+  ],
+  "author": "Bryan Nelson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coolsitebiz/auth-passport-local/issues"
+  },
+  "homepage": "https://github.com/coolsitebiz/auth-passport-local#readme",
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "ejs": "3.1.5",
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.4"
+  }
+}
