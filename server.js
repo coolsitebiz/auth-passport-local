@@ -4,6 +4,7 @@ const express = require('express');
 const authRouter = require('./routes/authRoutes');
 const session = require('express-session');
 const mongoose = require('mongoose');
+const connection = require('./config/database');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -15,12 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 const MongoStore = require('connect-mongo')(session);
-
-// DB connection
-const connection = mongoose.createConnection(process.env.DB_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
 
 // Session config
 const sessionStore = new MongoStore({
