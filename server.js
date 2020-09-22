@@ -1,29 +1,32 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+
 
 const express = require('express');
 const authRouter = require('./routes/authRoutes');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const app = express();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 const port = process.env.PORT || 3000;
 
 const MongoStore = require('connect-mongo')(session);
+
+// DB connection
 const connection = mongoose.createConnection(process.env.DB_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
+// Session config
 const sessionStore = new MongoStore({
     mongooseConnection: connection,
     collection: 'sessions'
 });
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -34,8 +37,10 @@ app.use(session({
     }
 }));
 
+// EJS init
 app.set('view engine', 'ejs');
 
+// Routes
 app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
