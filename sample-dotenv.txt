@@ -1,2 +1,4 @@
 NODE_ENV=dev
 PORT=3000
+DB_STRING=mongodb://localhost:27017/passportdemo
+SESSION_SECRET=secret
