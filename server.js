@@ -5,6 +5,7 @@ const authRouter = require('./routes/authRoutes');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const connection = require('./config/database');
+const passport = require('passport');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -31,6 +32,11 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 60 * 24 // 1 day
     }
 }));
+
+//passport init
+require('./config/passport');
+app.use(passport.initialize());
+app.use(passport.session());
 
 // EJS init
 app.set('view engine', 'ejs');

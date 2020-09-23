@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 require('dotenv').config();
 
@@ -9,10 +10,11 @@ const connection = mongoose.createConnection(conn, {
     useUnifiedTopology: true
 });
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     username: String,
-    password: String
-})
+    hash: String,
+    salt: String
+});
 
 const User = connection.model('User', UserSchema);
 
