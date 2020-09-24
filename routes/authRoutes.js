@@ -24,11 +24,14 @@ function route() {
       res.render('register');
     })
 
+    router.get('/logout', (req, res) => {
+      req.logout();
+      res.redirect('/');
+    })
+
     //post routes
 
-    router.post('/login', passport.authenticate('local'), (req, res) => {
-      res.send(req.body);
-    });
+    router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', successRedirect: '/auth/login-success' }));
 
     router.post('/register', (req, res) => {
       const saltHash = genPassword(req.body.password);
