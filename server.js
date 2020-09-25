@@ -6,6 +6,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const connection = require('./config/database');
 const flash = require('connect-flash');
+const expressLayouts = require('express-ejs-layouts');
 const passport = require('passport');
 
 if (process.env.NODE_ENV !== 'production') {
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
   next();
 })
 // EJS init
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 // Routes
