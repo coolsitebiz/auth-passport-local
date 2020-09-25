@@ -1,4 +1,7 @@
 <h1>login</h1>
+<% for(i=0; i<errors.length; i++) {   %>
+    <%= errors[i] %>
+<%}%>
 <form method="POST" action="/auth/login">
     <label for="username">Username: </Label>
     <input type="text" name="username" />

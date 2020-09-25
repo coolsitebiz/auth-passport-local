@@ -13,7 +13,9 @@ function route() {
     })
 
     router.get('/login', (req, res) => {
-      res.render('login');
+      console.log(req.session);
+      const errors = req.flash().error || [];
+      res.render('login', { errors });
     })
 
     router.get('/login-success', (req, res) => {
@@ -26,12 +28,12 @@ function route() {
 
     router.get('/logout', (req, res) => {
       req.logout();
-      res.redirect('/');
+      res.send('You logged out');
     })
 
     //post routes
 
-    router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', successRedirect: '/auth/login-success' }));
+    router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', failureFlash: true, successRedirect: '/auth/login-success' }));
 
     router.post('/register', (req, res) => {
       const saltHash = genPassword(req.body.password);

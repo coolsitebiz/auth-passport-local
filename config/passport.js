@@ -15,7 +15,7 @@ const verifyCallback = (username, password, done) => {
         .then((user) => {
             if (!user) { 
                 console.log('user not found');    
-                return done(null, false) 
+                return done(null, false); 
             };
             console.log('validating user...');
             //change to bcrypt later
