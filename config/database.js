@@ -6,14 +6,15 @@ require('dotenv').config();
 const conn = process.env.DB_STRING;
 
 const connection = mongoose.createConnection(conn, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 const UserSchema = new Schema({
-    username: String,
-    hash: String,
-    salt: String
+  username: String,
+  hash: String,
+  salt: String,
+  admin: Boolean
 });
 
 const User = connection.model('User', UserSchema);

@@ -1,13 +1,13 @@
 <h1>login</h1>
 <% for(i=0; i<errors.length; i++) {   %>
-    <%= errors[i] %>
+<%= errors[i] %>
 <%}%>
 <form method="POST" action="/auth/login">
-    <label for="username">Username: </Label>
-    <input type="text" name="username" />
-    <br />
-    <label for="password">Password: </label>
-    <input type="password" name="password" />
-    <br />
-    <button type="submit">Submit</button>
+  <label for="username">Username: </Label>
+  <input type="text" name="username" />
+  <br />
+  <label for="password">Password: </label>
+  <input type="password" name="password" />
+  <br />
+  <button type="submit">Submit</button>
 </form>
