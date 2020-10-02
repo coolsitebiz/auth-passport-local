@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { genPassword, validPassword } = require('../lib/passwordUtils');
+const strongPass = require('../lib/passValidator');
 const connection = require('../config/database');
 const User = connection.models.User;
 const { isAuth } = require('../lib/authUtils');
@@ -43,9 +44,12 @@ function route() {
 
     //post routes
 
-    router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', failureFlash: true, successRedirect: '/auth/login-success' }));
+    router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', failureFlash: true, successRedirect: '../dashboard' }));
 
     router.post('/register', (req, res) => {
+      if (!strongPass(req.body.password)) {
+        return res.json({ err: 'weak password'});
+      };
       const saltHash = genPassword(req.body.password);
 
       const salt = saltHash.salt;

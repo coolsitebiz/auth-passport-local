@@ -8,6 +8,7 @@ const connection = require('./config/database');
 const flash = require('connect-flash');
 const expressLayouts = require('express-ejs-layouts');
 const passport = require('passport');
+const { isAuth } = require('./lib/authUtils');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -60,6 +61,10 @@ app.get('/', (req, res) => {
     req.session.views = 1;
   }
   res.render('index');
+})
+
+app.get('/dashboard', isAuth, (req, res) => {
+  res.send('here you are idiot');
 })
 
 app.listen(3000, () => {
