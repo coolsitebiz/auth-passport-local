@@ -42,11 +42,11 @@ require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
-  next();
-})
+// app.use((req, res, next) => {
+//   console.log(req.session);
+//   console.log(req.user);
+//   next();
+// })
 // EJS init
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/dashboard', isAuth, (req, res) => {
-  res.send('here you are idiot');
+  res.send('here you are. you logged in.');
 })
 
 app.listen(3000, () => {
