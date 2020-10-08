@@ -1,13 +1,17 @@
+<div class="d-flex justify-content-center">
+<div class="card" style="width: 30rem; padding: 10px; margin-top: 10vh;">
 <h1>login</h1>
-<% for(i=0; i<errors.length; i++) {   %>
-<%= errors[i] %>
-<%}%>
+<div class="form-group">
 <form method="POST" action="/auth/login">
   <label for="username">Username: </Label>
-  <input type="text" name="username" />
+  <input type="text" class="form-control" name="username" required />
   <br />
   <label for="password">Password: </label>
-  <input type="password" name="password" />
+  <input type="password" class="form-control" name="password" required />
   <br />
-  <button type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit">Submit</button>
 </form>
+<%- include('partials/messages'); %>
+</div>
+</div>
+</div>

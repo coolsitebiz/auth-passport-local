@@ -14,8 +14,7 @@ const verifyCallback = (username, password, done) => {
   User.findOne({ username: username })
     .then((user) => {
       if (!user) {
-        console.log('user not found');
-        return done(null, false);
+        return done(null, false, { message: 'Login failed' });
       };
       console.log('validating user...');
       //change to bcrypt later
@@ -25,8 +24,7 @@ const verifyCallback = (username, password, done) => {
         console.log('user is valid');
         return done(null, user);
       } else {
-        console.log('user not valid');
-        return done(null, false);
+        return done(null, false, { message: 'Login failed' });
       }
     })
     .catch((err) => {

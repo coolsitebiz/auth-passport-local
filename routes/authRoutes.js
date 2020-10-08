@@ -6,6 +6,7 @@ const connection = require('../config/database');
 const User = connection.models.User;
 const { isAuth } = require('../lib/authUtils');
 const { isAdmin } = require('../lib/authUtils');
+const flash = require('connect-flash');
 const router = express.Router();
 
 function route() {
@@ -42,54 +43,55 @@ function route() {
 
   //post routes
 
-  router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', failureFlash: true, successRedirect: '../dashboard' }));
+  router.post('/login', passport.authenticate('local', { failureRedirect: '/auth/login', failureFlash: true,  successRedirect: '../dashboard' }));
 
   router.post('/register', (req, res) => {
     const { username, email, password } = req.body;
     let errors = [];
 
     User.findOne({ username: username })
-    .then((user) => {
-      if(user) {
-        errors.push({ msg: 'username already taken' });
-      }
-      if (!strongPass(req.body.password)) {
-        errors.push({ msg: 'password too weak' })
-      };
+      .then((user) => {
+        if (user) {
+          errors.push({ msg: 'username already taken' });
+        }
+        if (!strongPass(req.body.password)) {
+          errors.push({ msg: 'password too weak' })
+        };
 
-      const saltHash = genPassword(req.body.password);
+        //check errors
+        if (errors.length > 0) {
+          console.log(errors);
+          return res.render('register', {
+            errors,
+            username,
+            email,
+            password
+          });
+        }
 
-      const salt = saltHash.salt;
-      const hash = saltHash.hash;
-  
-      const newUser = new User({
-        username: req.body.username,
-        hash: hash,
-        salt: salt,
-        admin: false
-      });
-      if (errors.length > 0) {
-        console.log(errors);
-        return res.render('register', {
-          errors,
-          username,
-          email,
-          password
+        // hash pw and create user object
+        const saltHash = genPassword(req.body.password);
+
+        const salt = saltHash.salt;
+        const hash = saltHash.hash;
+
+        const newUser = new User({
+          username: req.body.username,
+          hash: hash,
+          salt: salt,
+          admin: false
         });
-      } else {
+        //save new user
         newUser.save()
           .then((user) => {
             console.log(user);
           });
-  
+        req.flash('success_msg', 'You are now registered. Please log in.');
         res.redirect('/auth/login');
-      }
 
-
-    })
-    .catch((err) => { console.log(err)});
+      })
+      .catch((err) => { console.log(err) });
   })
-
   return router;
 }
 module.exports = route();
